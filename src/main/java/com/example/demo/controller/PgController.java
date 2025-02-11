@@ -1196,9 +1196,7 @@ public class PgController {
 			 
 			 @PostMapping("/delete-registered-matric")
 		     public String deleteMatricReg(@RequestParam("deleteMatricReg") Long id) {
-				 
-				 System.out.println("ID IS " + id);
-				 
+				  
 				 OnlineClass matric = onlineService.findOneBook(id);
 				    onlineService.delete(matric);
 				 	 
