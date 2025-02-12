@@ -311,7 +311,7 @@
 																<form id="searchForm">
 																	<div class="input-group">
 																		<input type="search" class="form-control"
-																			placeholder="Search by Email" name="email"
+																			placeholder="Tutor's Name" name="email"
 																			id="searchEemail" required>
 																		<div class="input-group-append">
 																			<button class="btn" type="button"
@@ -405,6 +405,7 @@
 																		<th>Email</th>
 																		<th>Teaching</th>
 																		<th>Phone</th>
+																		<th>Date</th>
 																		<th>Docs</th>
 																		<th>Actions</th>
 																	</tr>
@@ -437,6 +438,10 @@
 																			String syllabus = tutor.getSyllabus();
 																			String area = tutor.getArea();
 																			String country = tutor.getCountry();
+																			
+																			LocalDateTime createdAtStampPa = tutor.getCreatedAt();
+																			DateTimeFormatter dateFormatPa = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm");
+																			String formattedTimestampsPa = (createdAtStampPa != null) ? createdAtStampPa.format(dateFormatPa) : "N/A";
 
 																			%>
 
@@ -453,6 +458,10 @@
 																				</th>
 																				<th>
 																					<%=tutor.getPhoneNumber()%>
+																				</th>
+																				
+																				<th>
+																					 <%= formattedTimestampsPa %>
 																				</th>
 																				<th>
 																																	
@@ -6083,31 +6092,36 @@
 
 													// Send the fetch request
 													fetch('/searchTutor', requestOptions)
-														.then(response => response.json())
-														.then(tutor => {
-															// Check if the tutor is not empty
-															if (tutor && tutor.email === email) {
-																alert("Tutor found");
-																document.getElementById('searchEemail').value = "";
-																document.getElementById('tutorPanel').style.display = 'none';
+													    .then(response => response.json())
+													    .then(tutors => {
+													        // Check if the tutor list is not empty and search for the tutor with the matching email
+													        let tutor = tutors.find(tutor => tutor.fullNames === email);
 
-																/*Initialise Values*/
-																document.getElementById('searchName').textContent = tutor.fullNames;
-																document.getElementById('searchEmail').textContent = tutor.email;
-																document.getElementById('searchAvail').textContent = tutor.availability;
-																document.getElementById('searchLocation').textContent = tutor.address;
-																document.getElementById('searchPhone').textContent = tutor.phoneNumber;
+													        if (tutor) {
+													            alert("Tutor found");
 
-																document.getElementById('searchPanel').style.display = 'block';
+													            // Clear the search email input and hide the tutor panel
+													            document.getElementById('searchEemail').value = "";
+													            document.getElementById('tutorPanel').style.display = 'none';
 
-															} else {
-																alert("Not Found"); // Display error if not found
-																document.getElementById('searchEemail').value = "";
-															}
-														})
-														.catch(error => {
-															console.error('Error:', error); // Handle any errors
-														});
+													            // Initialize Values
+													            document.getElementById('searchName').textContent = tutor.fullNames;
+													            document.getElementById('searchEmail').textContent = tutor.email;
+													            document.getElementById('searchAvail').textContent = tutor.availability;
+													            document.getElementById('searchLocation').textContent = tutor.address;
+													            document.getElementById('searchPhone').textContent = tutor.phoneNumber;
+
+													            // Show the search panel
+													            document.getElementById('searchPanel').style.display = 'block';
+													        } else {
+													            alert("Not Found"); // Display error if no tutor matches the email
+													            document.getElementById('searchEemail').value = "";
+													        }
+													    })
+													    .catch(error => {
+													        console.error('Error:', error); // Handle any errors
+													    });
+
 
 
 												}

@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -93,6 +94,9 @@ public class Tutor {
     @Lob
     @Column(columnDefinition = "longblob")
     private byte[] idPassport;
+    
+    @Column(name = "createdAt")
+    private LocalDateTime createdAt;
 	
 	public Tutor() {
 		super();
@@ -334,6 +338,16 @@ public class Tutor {
 	public void setIdPassport(byte[] idPassport) {
 		this.idPassport = idPassport;
 	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+	
+	
 
 			
 }

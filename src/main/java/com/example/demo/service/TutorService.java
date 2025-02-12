@@ -29,11 +29,9 @@ public class TutorService {
 	    // Get all tutors
 	    List<Tutor> allTutors = repo.findAll();
 
-	    // Shuffle the list to randomize the order
-	    Collections.shuffle(allTutors);
-
 	    // Return the first 8 tutors (or fewer if there are not enough)
-	    return allTutors.subList(0, Math.min(8, allTutors.size()));
+	    return allTutors.subList(0, Math.min(5, allTutors.size()));
+	    
 	}
 	
 	public void save(Tutor msc) {
@@ -118,6 +116,14 @@ public class TutorService {
 	     // Return a paginated page of tutors
 	     return new PageImpl<>(pageContent, PageRequest.of(currentPage - 1, pageSize), tutors.size());
 	 }
+	 
+	 public Page<Tutor> viewProfile(int pageNumber) {
+		    Pageable pageable = PageRequest.of(pageNumber - 1, 5); // No sorting
+		    return repo.findAll(pageable);
+		}
+		
+	 
+
 	
 	
 		

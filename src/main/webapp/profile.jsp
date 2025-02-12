@@ -33,8 +33,6 @@
  <meta name="twitter:description" content="Get personalized tutoring with Apex Academic Centre's expert online and in-person tutors. Book your tutor today!">
  <meta name="twitter:image" content="https://bookatutorapexacademiccentre.co.za/seo.jpeg">
 
-    <!--  <link rel="icon" href="data:image/png;base64, ${imageImage}" sizes="50x50" type="image/x-icon"> -->
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <!--=============== REMIXICONS ===============-->

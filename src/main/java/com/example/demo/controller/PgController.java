@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -109,10 +110,9 @@ public class PgController {
 		 
 		 return getOnePage(location);
 	 }
+
 	 
-	 
-	 @GetMapping("/tutorslist/{pageNumber}")
-	 public ModelAndView getOnePage(@PathVariable("pageNumber") int currentPage) {
+	 public ModelAndView getOnePage(int currentPage) {
 	     // Retrieve the paginated list of tutors
 	     Page<Tutor> page = tutorService.findPage(currentPage);
 
@@ -544,19 +544,13 @@ public class PgController {
 	 
 	 @PostMapping("/searchTutor")
 	 @ResponseBody
-	 public Tutor searchTutor(@RequestBody Map<String, String> requestBody) {
+	 public List<Tutor> searchTutor(@RequestBody Map<String, String> requestBody) {
 	
-		 String email = requestBody.get("searchEmail");
-		
+		 String name = requestBody.get("searchEmail");
 		 
-		 Optional<Tutor> opT = tutorRepo.findById(email);
-		 Tutor tutor = new Tutor();
+		 System.out.println(name);
 		 
-		 if (opT.isPresent()){
-			 
-			 tutor = opT.get();
-
-		 }
+		 List<Tutor> tutor = tutorRepo.searchByName(name);
 		
 		 return tutor;
 		 
@@ -1124,9 +1118,14 @@ public class PgController {
   
 		    @GetMapping("/view-profile")
 		    public ModelAndView getTry(@RequestParam("email") String email) {
-		        
-		        List<Tutor> tutors = tutorService.getRandomTutors();
-		        
+		    	
+		        Random rand = new Random();
+		        int randomInt = rand.nextInt(7) + 1; 
+		    	
+			     Page<Tutor> page = tutorService.viewProfile(randomInt);
+
+			     List<Tutor> tutors = page.getContent();
+		 
 		        String tutorEmail = simpleDecrypt(email);
 		        
 		        Optional<Tutor> opT = tutorRepo.findById(tutorEmail);
@@ -1139,16 +1138,12 @@ public class PgController {
 		        }
 		        
 		        String name = tutor.getFullNames();
-		        
-		        byte[] image = tutor.getImage();
-		        	           
-	               
+   
 		        ModelAndView data = new ModelAndView("profile.jsp"); // load the admin dashboard
 		        data.addObject("tutor", tutor);
 		        data.addObject("tutors", tutors);
 		        data.addObject("name", name);
-		        data.addObject("reviews", reviews);
-		        data.addObject("imageImage", image);		 
+		        data.addObject("reviews", reviews);	 
 		        data.addObject("email", email);	
 		        
 		        return data;   
@@ -2159,12 +2154,12 @@ public class PgController {
 						           byte[] cv = bTutor.getCv();
 						           byte[] qualiDoc = bTutor.getEducation();
 						           byte[] idPass = bTutor.getIdPassport();
-						        
-						                
+						              
 								   Tutor tutor = new Tutor(email,name,"Yes",phone,subjects,grades,address,tutorOption,qualification,about,bio,imageData,syllabus,area,country,date,surname,hiddenModules,expYear);
 								   tutor.setCv(cv);
 								   tutor.setEducation(qualiDoc);
 								   tutor.setIdPassport(idPass);
+								   tutor.setCreatedAt(bTutor.getCreatedAt());
 								   
 								   
 								    tutorService.save(tutor); 
