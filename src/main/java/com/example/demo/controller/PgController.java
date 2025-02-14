@@ -2302,8 +2302,9 @@ public class PgController {
 							        }
 
 							        // Get all tutors
-							        List<Tutor> tutors = tutorService.listAll();
-
+							       List<Tutor> tutors = tutorService.listAll();
+							        
+							   
 							        // Filter the tutors based on the provided attributes
 							        List<Tutor> filteredTutors = tutors.stream()
 							            .filter(tutor -> {

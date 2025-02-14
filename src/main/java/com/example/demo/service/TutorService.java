@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,10 @@ public class TutorService {
 	
 	@Autowired
 	private TutorRepository repo;
+	
+	/*public List<TutorProjection> listAll() {
+	    return repo.listAll(); // This will now return only the fields in TutorProjection
+	}*/
 	
 	public List<Tutor> listAll(){
 		
@@ -108,7 +111,7 @@ public class TutorService {
 	
 
 	 public Page<Tutor> paginateTutors(List<Tutor> tutors, int currentPage) {
-	     int pageSize = 10; // Define the page size
+	     int pageSize = 10; 
 	     int start = Math.max((currentPage - 1) * pageSize, 0);
 	     int end = Math.min(start + pageSize, tutors.size());
 	     List<Tutor> pageContent = tutors.subList(start, end);

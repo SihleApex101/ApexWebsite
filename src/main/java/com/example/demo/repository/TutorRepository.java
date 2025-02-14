@@ -11,6 +11,9 @@ import com.example.demo.model.Tutor;
 public interface TutorRepository extends JpaRepository<Tutor, String>{
 	
 	@Query("SELECT t FROM Tutor t WHERE t.fullNames LIKE %:name%")
-	List<Tutor> searchByName(@Param("name") String name);
-
+	List<Tutor> searchByName(@Param("name") String name); 
+	
+	/*@Query("SELECT t FROM Tutor t")
+	List<TutorProjection> listAll();*/
+	
 }

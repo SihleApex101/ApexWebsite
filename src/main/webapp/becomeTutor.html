@@ -852,17 +852,15 @@
 							<div class="form-row">
 
 								<div class="form-group">
-									<label for="bio">Curriculum Vitae <span class="required">*</span></label><br><br>
-									<input type="file" id="cv" name="cv" class="input" placeholder="upload cv" required>
-									<div id="cv-error" class="error"></div>
+								    <label for="cv">Curriculum Vitae <span class="required">*</span></label><br><br>
+								    <input type="file" id="cv" name="cv" class="input" placeholder="upload cv" required onchange="validateFileSize('cv', 'cv-error')">
+								    <div id="cv-error" class="error"></div>
 								</div>
 
 								<div class="form-group">
-									<label for="dQual">Qualification(s).merged <span
-											class="required">*</span></label><br><br>
-									<input type="file" id="dQual" name="dQual" class="input"
-										placeholder="upload qualification" required>
-									<div id="dQual-error" class="error"></div>
+								    <label for="dQual">Qualification(s).merged <span class="required">*</span></label><br><br>
+								    <input type="file" id="dQual" name="dQual" class="input" placeholder="upload qualification" required onchange="validateFileSize('dQual', 'dQual-error')">
+								    <div id="dQual-error" class="error"></div>
 								</div>
 
 							</div>
@@ -870,17 +868,15 @@
 							<div class="form-row">
 
 								<div class="form-group">
-									<label for="ids">ID / Passport <span class="required">*</span></label><br><br>
-									<input type="file" id="ids" name="ids" class="input"
-										placeholder="upload ID / Passport" required>
-									<div id="id_pass-error" class="error"></div>
+								    <label for="ids">ID / Passport <span class="required">*</span></label><br><br>
+								    <input type="file" id="ids" name="ids" class="input" placeholder="upload ID / Passport" required onchange="validateFileSize('ids', 'id_pass-error')">
+								    <div id="id_pass-error" class="error"></div>
 								</div>
 
 								<div class="form-group">
-									<label for="image">Your Image<span class="required">*</span></label><br><br>
-									<input type="file" id="image" name="image" class="input"
-										placeholder="upload professional image" required>
-									<div id="image-error" class="error"></div>
+								    <label for="image">Your Image<span class="required">*</span></label><br><br>
+								    <input type="file" id="image" name="image" class="input" placeholder="upload professional image" required onchange="validateFileSize('image', 'image-error')">
+								    <div id="image-error" class="error"></div>
 								</div>
 
 							</div>
@@ -1643,6 +1639,26 @@
 				errorDiv.textContent = ""; // Clear error message
 			}
 		}*/
+		
+		function validateFileSize(inputId, errorDivId) {
+		    var fileInput = document.getElementById(inputId);
+		    var file = fileInput.files[0];
+		    var errorDiv = document.getElementById(errorDivId);
+		    
+		    // Clear any previous error message
+		    errorDiv.innerHTML = '';
+		    
+		    // Check if a file is selected
+		    if (file) {
+		        var maxSize = 2 * 1024 * 1024; // 2MB in bytes
+		        
+		        if (file.size > maxSize) {
+		            errorDiv.innerHTML = 'The file size exceeds 2MB. Please upload a smaller file.';
+					fileInput.value = '';
+					fileInput.placeholder = '';
+		        }
+		    }
+		}
 
 
 
