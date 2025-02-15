@@ -1032,8 +1032,10 @@
 	            <!-- Container for images -->
 	            <div class="image-wrapper">
 	                <img src="apex_child.jpeg" loading="lazy" alt="Image 1" class="image image1">
-	                <img src="In-person Tutor & Student Apex Academic Centre.jpg" loading="lazy" alt="Image 2" class="image image2">  
-	            </div>
+					<% if (tutors.size() > 1) { %>
+					 <img src="In-person Tutor & Student Apex Academic Centre.jpg" loading="lazy" alt="Image 2" class="image image2">  
+					<% } %> 
+				</div>
 	            <div class="whatsapp-wrapper">
 	                  <a href="https://wa.me/27840488881?text=Hi%20*Apex%20Academic%20Centre*!%20I%20need%20more%20info%20about%20Apex%20Academic%20Centre%20https://www.apexacademiccentre.co.za" target="_blank" class="whatsapp-icon">
 	                    <i class="fab fa-whatsapp" style="font-size: 40px; color: #fff; "></i> 
@@ -2092,7 +2094,7 @@
 	                " class="link">≫ Accounting</a>
 	                <a href="https://bookatutorapexacademiccentre.co.za/Business_Studies-tutors
 	                " class="link">≫ Business Studies</a>
-	                <a href="https://bookatutorapexacademiccentre.co.za/Econimics-tutors
+	                <a href="https://bookatutorapexacademiccentre.co.za/Economics-tutors
 	                " class="link">≫ Economics</a>
 	                <a href="https://bookatutorapexacademiccentre.co.za/Computer_Science-tutors
 	                " class="link">≫ Computer Science</a>

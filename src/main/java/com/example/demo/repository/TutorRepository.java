@@ -13,7 +13,7 @@ public interface TutorRepository extends JpaRepository<Tutor, String>{
 	@Query("SELECT t FROM Tutor t WHERE t.fullNames LIKE %:name%")
 	List<Tutor> searchByName(@Param("name") String name); 
 	
-	/*@Query("SELECT t FROM Tutor t")
-	List<TutorProjection> listAll();*/
-	
+    @Query("SELECT t FROM Tutor t WHERE t.area = :location")
+    List<Tutor> findTutorsByLocation(@Param("location") String location);
+		
 }

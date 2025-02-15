@@ -1999,7 +1999,7 @@
             " class="link">≫ Accounting</a>
             <a href="https://bookatutorapexacademiccentre.co.za/Business_Studies-tutors
             " class="link">≫ Business Studies</a>
-            <a href="https://bookatutorapexacademiccentre.co.za/Econimics-tutors
+            <a href="https://bookatutorapexacademiccentre.co.za/Economics-tutors
             " class="link">≫ Economics</a>
             <a href="https://bookatutorapexacademiccentre.co.za/Computer_Science-tutors
             " class="link">≫ Computer Science</a>

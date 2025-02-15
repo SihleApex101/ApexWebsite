@@ -2,10 +2,9 @@ package com.example.demo.controller;
 
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -36,7 +35,7 @@ import com.example.demo.model.PaidBookings;
 import com.example.demo.model.Review;
 import com.example.demo.model.Tutor;
 import com.example.demo.repository.BecomeTutorRepository;
-import com.example.demo.repository.PaidBookingsRepository;
+
 import com.example.demo.repository.ReviewRepository;
 import com.example.demo.repository.TutorRepository;
 import com.example.demo.service.AdminService;
@@ -92,10 +91,7 @@ public class PgController {
 
 	 @Autowired
 	 private ReviewRepository reviewRepo;
-	 
-	 @Autowired
-	 private PaidBookingsRepository paidRepo;
-	 
+
 	 @Autowired
 	 private PaidBookingsService paidService;
 	 
@@ -2234,12 +2230,14 @@ public class PgController {
 							 
 							 @GetMapping("/tutors-in-place")
 							 public ModelAndView byLocation(String location, int currentPage) {
+								 
+								   System.out.println(location);
 							     
 							        String search = "l"+location;
 							      
 							        String[] v = search.split("_");
 							        
-							        System.out.println(currentPage);
+							        System.out.println("Search By Location");
 
 								     // Check if there are at least two elements in the array
 							        
@@ -2281,80 +2279,9 @@ public class PgController {
 	  
 								     } 
 								       
-						
-							        // Split the search string by commas
-							        String[] searchParams = search.split(",");
-
-							        // Create an array to hold the filters
-							        String[] filters = new String[4];
-
-							        // Parse the search parameters
-							        for (String param : searchParams) {
-							            if (param.startsWith("l")) {
-							                filters[0] = param.substring(1).trim(); // Set location
-							            } else if (param.startsWith("s")) {
-							                filters[1] = param.substring(1).trim(); // Set subject
-							            } else if (param.startsWith("c")) {
-							                filters[2] = param.substring(1).trim(); // Set curriculum
-							            } else if (param.startsWith("t")) {
-							                filters[3] = param.substring(1).trim(); // Set tutoring option
-							            }
-							        }
-
 							        // Get all tutors
-							       List<Tutor> tutors = tutorService.listAll();
-							        
-							   
-							        // Filter the tutors based on the provided attributes
-							        List<Tutor> filteredTutors = tutors.stream()
-							            .filter(tutor -> {
-							                boolean matches = true;
-
-							                // Check location
-							                if (filters[0] != null) {
-							                    String[] areas = tutor.getArea().split(",\\s*");
-							                    String[] countries = tutor.getCountry().split(",\\s*");
-							                    String address = tutor.getAddress(); // Get the tutor's address
-
-							                    matches = Arrays.stream(areas)
-							                        .anyMatch(area -> area.equalsIgnoreCase(filters[0])) || 
-							                        Arrays.stream(countries)
-							                        .anyMatch(country -> country.equalsIgnoreCase(filters[0])) ||
-							                        address.equalsIgnoreCase(filters[0]); // Check if the address matches the filter
-							                }
-
-							                // Check subjects
-							                if (matches && filters[1] != null) {
-							                    String[] subjects = tutor.getSubjects().split(",\\s*");
-							                    matches = Arrays.stream(subjects)
-							                        .anyMatch(subject -> subject.equalsIgnoreCase(filters[1]));
-							                }
-
-							                // Check syllabus
-							                if (matches && filters[2] != null) {
-							                    String[] syllabuses = tutor.getSyllabus().split(",\\s*");
-							                    matches = Arrays.stream(syllabuses)
-							                        .anyMatch(syllabus -> syllabus.equalsIgnoreCase(filters[2]));
-							                }
-
-							             // Check availability
-							                if (matches && filters[3] != null) {
-							                    String[] availabilities = tutor.getAvailability().split("/");
-
-							                    // Trim each availability to remove leading/trailing whitespace
-							                    availabilities = Arrays.stream(availabilities)
-							                        .map(String::trim) // Trim each element
-							                        .toArray(String[]::new); // Collect back to an array
-
-							                    // Check if any availability matches the filter (case insensitive)
-							                    matches = Arrays.stream(availabilities)
-							                        .anyMatch(availability -> availability.equalsIgnoreCase(filters[3]));
-							                }
-							                return matches;
-							            })
-							            .collect(Collectors.toList());
-
-							  
+							       List<Tutor> filteredTutors = tutorService.listAllByLocation(location);
+							         
 							        Page<Tutor> page = tutorService.paginateTutors(filteredTutors, currentPage);
 			
 								     long totalPages = page.getTotalPages();

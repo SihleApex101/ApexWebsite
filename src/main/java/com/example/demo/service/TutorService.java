@@ -124,6 +124,10 @@ public class TutorService {
 		    Pageable pageable = PageRequest.of(pageNumber - 1, 5); // No sorting
 		    return repo.findAll(pageable);
 		}
+	 
+	 public List<Tutor> listAllByLocation(String location){
+		    return repo.findTutorsByLocation(location);
+		}
 		
 	 
 
